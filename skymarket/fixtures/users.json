@@ -68,5 +68,33 @@
       "last_name": "Петров",
       "is_active": true
     }
+  },
+    {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "email": "admin@admin.com",
+      "password": "pbkdf2_sha256$260000$lQMDATl3lo70SxKlfKt54p$Oi1aKfZVztj4GXC33w588Ry5qDURM/U+GiopfwyCS8g=",
+      "last_login": "2022-02-20 13:34:16.332479+03:00",
+      "phone": "+79851111111",
+      "role": "admin",
+      "first_name": "admin",
+      "last_name": "admin",
+      "is_active": true
+    }
+  },
+    {
+    "model": "users.user",
+    "pk": 7,
+    "fields": {
+      "email": "user@user.com",
+      "password": "pbkdf2_sha256$260000$tU15x4tyZd9ldh7Ng6xvD8$IKjJENb7dOPhdPNhgY+p/rOjmur1XF2pm+S/fsOhyXs=",
+      "last_login": "2022-02-20 13:34:16.332479+03:00",
+      "phone": "+79162222222",
+      "role": "member",
+      "first_name": "user",
+      "last_name": "user",
+      "is_active": true
+    }
   }
 ]
