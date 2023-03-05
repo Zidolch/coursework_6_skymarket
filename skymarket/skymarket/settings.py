@@ -34,7 +34,6 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
-# TODO здесь тоже нужно подключить Swagger и corsheaders
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -43,7 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "djoser"
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    "djoser",
     "users",
     "ads",
     "redoc",
@@ -83,25 +84,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "skymarket.wsgi.application"
 
-# TODO здесь мы настраиваем аутентификацию и пагинацию
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
-# TODO здесь мы настраиваем Djoser
+
 DJOSER = {
     'SERIALIZERS': {
-        'user_create': 'users.serializers.UserRegistrationSerializer'
+        'user': 'users.serializers.UserRegistrationSerializer'
     },
-    'LOGIN_FIELD': 'email'
+    'LOGIN_FIELD': 'email',
+    'HIDE_USER': False,
 }
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# TODO здесь необходимо настроить подключение к БД
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -161,6 +162,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = 'users.User'
 
 
 # Include Email Backend

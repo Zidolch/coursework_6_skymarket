@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db import models
 
 
@@ -8,6 +7,7 @@ class Ad(models.Model):
     price = models.PositiveIntegerField()
     description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(null=True, blank=True, upload_to='django_media')
 
     class Meta:
         verbose_name = 'Объявление'

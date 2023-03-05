@@ -1,9 +1,8 @@
-from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
+from django.core.validators import RegexValidator
 from django.db import models
 from users.managers import UserManager
-from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import BaseUserManager
 
 
 class UserRoles(models.TextChoices):
@@ -14,6 +13,17 @@ class UserRoles(models.TextChoices):
 class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', "role"]
+
+    email = models.EmailField(max_length=200, null=False, blank=False, unique=True)
+    first_name = models.CharField(max_length=200, null=False, blank=False)
+    last_name = models.CharField(max_length=200, null=False, blank=False)
+    phone = models.CharField(max_length=20, validators=[RegexValidator(
+        regex="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$",
+        message='Недопустимый номер.'
+    )])
+    role = models.CharField(max_length=6, choices=UserRoles.choices, default=UserRoles.MEMBER)
+    is_active = models.BooleanField(default=True)
+    image = models.ImageField(null=True, blank=True, upload_to='django_media')
 
     objects = UserManager()
 
@@ -38,35 +48,3 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return self.is_admin
-
-
-class UserManager(BaseUserManager):
-
-    def create_user(self, email, first_name, last_name, phone, password=None):
-        if not email:
-            raise ValueError('Users must have an email address')
-        user = self.model(
-            email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            role="user"
-        )
-        user.is_active = True
-        user.set_password(password)
-        user.save(using=self._db)
-
-        return user
-
-    def create_superuser(self, email, first_name, last_name, phone, password=None):
-        user = self.create_user(
-            email,
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            password=password,
-            role="admin"
-        )
-
-        user.save(using=self._db)
-        return user

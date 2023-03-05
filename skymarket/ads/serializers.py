@@ -1,18 +1,32 @@
 from rest_framework import serializers
+from ads.models import Ad, Comment
 
-
-# TODO Сериалайзеры. Предлагаем Вам такую структуру, однако вы вправе использовать свою
 
 class CommentSerializer(serializers.ModelSerializer):
-    # TODO сериалайзер для модели
-    pass
+    author_id = serializers.ReadOnlyField(source='author.id')
+    author_first_name = serializers.ReadOnlyField(source='author.first_name')
+    author_last_name = serializers.ReadOnlyField(source='author.last_name')
+    author_image = serializers.ImageField(source='author.image', read_only=True)
+    ad_id = serializers.ReadOnlyField(source='ad.id')
+
+    class Meta:
+        model = Comment
+        exclude = ['author', 'ad']
 
 
-class AdSerializer(serializers.ModelSerializer):
-    # TODO сериалайзер для модели
-    pass
+class AdListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ad
+        fields = ['id', 'image', 'title', 'price', 'description']
 
 
 class AdDetailSerializer(serializers.ModelSerializer):
-    # TODO сериалайзер для модели
-    pass
+    author_id = serializers.ReadOnlyField(source='author.id')
+    author_first_name = serializers.ReadOnlyField(source='author.first_name')
+    author_last_name = serializers.ReadOnlyField(source='author.last_name')
+    phone = serializers.ReadOnlyField(source='author.phone')
+
+    class Meta:
+        model = Ad
+        exclude = ['author', 'created_at']
+
