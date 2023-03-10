@@ -13,7 +13,7 @@ urlpatterns = [
     path('api/users/', include('users.urls')),
     path('api/', include('ads.urls')),
     path('api/token/', TokenObtainPairView.as_view()),
-    path('api/token/refresh/', TokenRefreshView.as_view()),
+    path('api/refresh/', TokenRefreshView.as_view()),
 ]
 
 if settings.DEBUG:
