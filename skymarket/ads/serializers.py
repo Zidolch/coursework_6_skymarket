@@ -7,14 +7,14 @@ class CommentSerializer(serializers.ModelSerializer):
     author_first_name = serializers.ReadOnlyField(source='author.first_name')
     author_last_name = serializers.ReadOnlyField(source='author.last_name')
     author_image = serializers.ImageField(source='author.image', read_only=True)
-    ad_id = serializers.ReadOnlyField(source='ad.id')
+    ad_pk = serializers.ReadOnlyField(source='ad.id')
 
     class Meta:
         model = Comment
         exclude = ['author', 'ad']
 
 
-class AdListSerializer(serializers.ModelSerializer):
+class AdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ad
         fields = ['pk', 'image', 'title', 'price', 'description']

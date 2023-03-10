@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from ads.models import Ad, Comment
 from ads.permissions import IsOwnerOrAdmin
-from ads.serializers import AdDetailSerializer, AdListSerializer, CommentSerializer
+from ads.serializers import AdDetailSerializer, AdSerializer, CommentSerializer
 
 
 class AdPagination(pagination.PageNumberPagination):
@@ -29,7 +29,7 @@ class AdViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action in ['list', 'personal_list']:
-            return AdListSerializer
+            return AdSerializer
         else:
             return AdDetailSerializer
 
