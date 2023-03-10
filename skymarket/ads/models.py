@@ -5,7 +5,7 @@ class Ad(models.Model):
     title = models.CharField(max_length=200, null=False, blank=False)
     author = models.ForeignKey('users.User', on_delete=models.CASCADE)
     price = models.PositiveIntegerField()
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(max_length=1000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(null=True, blank=True, upload_to='django_media')
 
