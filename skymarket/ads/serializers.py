@@ -3,15 +3,16 @@ from ads.models import Ad, Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    pk = serializers.ReadOnlyField(source='id')
     author_id = serializers.ReadOnlyField(source='author.id')
     author_first_name = serializers.ReadOnlyField(source='author.first_name')
     author_last_name = serializers.ReadOnlyField(source='author.last_name')
     author_image = serializers.ImageField(source='author.image', read_only=True)
-    ad_pk = serializers.ReadOnlyField(source='ad.id')
+    ad_id = serializers.ReadOnlyField(source='ad.id')
 
     class Meta:
         model = Comment
-        exclude = ['author', 'ad']
+        exclude = ['id', 'author', 'ad']
 
 
 class AdSerializer(serializers.ModelSerializer):
@@ -21,6 +22,7 @@ class AdSerializer(serializers.ModelSerializer):
 
 
 class AdDetailSerializer(serializers.ModelSerializer):
+    pk = serializers.ReadOnlyField(source='id')
     author_id = serializers.ReadOnlyField(source='author.id')
     author_first_name = serializers.ReadOnlyField(source='author.first_name')
     author_last_name = serializers.ReadOnlyField(source='author.last_name')
@@ -28,5 +30,5 @@ class AdDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ad
-        exclude = ['author', 'created_at']
+        exclude = ['id', 'author', 'created_at']
 
